@@ -1,5 +1,5 @@
 {
-  "name": "node-plop",
+  "name": "@nurdiansyah/node-plop",
   "version": "0.31.0",
   "description": "programmatic plopping for fun and profit",
   "main": "src/index.js",
