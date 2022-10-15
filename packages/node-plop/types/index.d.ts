@@ -141,7 +141,7 @@ export type PromptQuestion =
 export type DynamicPromptsFunction = (
   inquirer: inquirer.Inquirer
 ) => Promise<inquirer.Answers>;
-export type DynamicActionsFunction = (data?: inquirer.Answers) => ActionType[];
+export type DynamicActionsFunction = (data?: inquirer.Answers) => ActionType[] | Promise<ActionType[]>;
 
 export type Prompts = DynamicPromptsFunction | PromptQuestion[];
 export type Actions = DynamicActionsFunction | ActionType[];
