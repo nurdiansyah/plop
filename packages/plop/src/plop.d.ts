@@ -12,7 +12,7 @@ export {
   PlopGenerator,
   NodePlopAPI,
   PlopGeneratorConfig,
-} from "node-plop";
+} from "@nurdiansyah/node-plop";
 
 export const Plop: Liftoff;
 export const run: (
