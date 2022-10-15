@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import nodePlop from "node-plop";
+import nodePlop from "@nurdiansyah/node-plop";
 import fs from "node:fs";
 
 const defaultChoosingMessage =
