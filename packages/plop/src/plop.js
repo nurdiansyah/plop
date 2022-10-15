@@ -10,7 +10,7 @@ import chalk from "chalk";
 const args = process.argv.slice(2);
 const argv = minimist(args);
 
-import nodePlop from "node-plop";
+import nodePlop from "@nurdiansyah/node-plop";
 import * as out from "./console-out.js";
 import { combineBypassData } from "./bypass.js";
 import { getBypassAndGenerator, handleArgFlags } from "./input-processing.js";
