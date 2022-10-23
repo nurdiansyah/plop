@@ -18,12 +18,29 @@ const doAppend = async function (data, cfg, plop, fileData) {
   if (cfg.unique !== false) {
     // only remove after "pattern", so that we remove not too much accidentally
     const parts = fileData.split(cfg.pattern);
-    const lastPart = parts[parts.length - 1];
-    const lastPartWithoutDuplicates = lastPart.replace(
-      new RegExp(separator + stringToAppend, "g"),
-      ""
-    );
-    fileData = fileData.replace(lastPart, lastPartWithoutDuplicates);
+    let lastPart = parts[parts.length - 1];
+    if (cfg.patternEnd) {
+      const _parts = lastPart.split(cfg.patternEnd, 2);
+      const _pattern = cfg.pattern.source || cfg.pattern;
+      const _content = `${_pattern}${_parts[0]}${
+        _parts[1] ? cfg.patternEnd : ""
+      }`;
+      // batas akhir pencarian
+      const _contentWithoutDuplicates = _content.replace(
+        new RegExp(separator + stringToAppend, "g"),
+        ""
+      );
+      fileData = fileData.replace(
+        new RegExp(_content, "g"),
+        _contentWithoutDuplicates
+      );
+    } else {
+      const lastPartWithoutDuplicates = lastPart.replace(
+        new RegExp(separator + stringToAppend, "g"),
+        ""
+      );
+      fileData = fileData.replace(lastPart, lastPartWithoutDuplicates);
+    }
   }
 
   // add the appended string to the end of the "fileData" if "pattern"
@@ -35,7 +52,6 @@ const doAppend = async function (data, cfg, plop, fileData) {
     }
     return fileData + stringToAppend;
   }
-
   return fileData.replace(cfg.pattern, "$&" + separator + stringToAppend);
 };
 

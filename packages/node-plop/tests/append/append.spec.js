@@ -72,6 +72,49 @@ describe("append", function () {
     expect((content.match(/Polo2/g) || []).length).toBe(1);
   });
 
+  test("check if duplicates get filtered only on scope patternEnd", async function () {
+    await makeList.runActions({
+      listName: "list4",
+      name: "Marco",
+      allowDuplicates: true,
+    });
+    await appendToList.runActions({
+      listName: "list4",
+      name: "Marco",
+      allowDuplicates: true,
+    });
+    await appendToList.runActions({
+      listName: "list4",
+      name: "Polo",
+      allowDuplicates: true,
+    });
+    await appendToList.runActions({
+      listName: "list4",
+      name: "Marco",
+      allowDuplicates: true,
+    });
+    await appendToList.runActions({
+      injectActions: [
+        {
+          type: "append",
+          path: "src/{{listName}}.txt",
+          pattern: /-- APPEND EXTRA --/gi,
+          template: "😻 name: Marco1",
+        },
+      ],
+      listName: "list4",
+      name: "Marco",
+      allowDuplicates: false,
+      patternEnd: "-- APPEND END --",
+    });
+    const filePath = path.resolve(testSrcPath, "list4.txt");
+    const content = fs.readFileSync(filePath).toString();
+    expect((content.match(/Marco1/g) || []).length).toBe(2);
+    expect((content.match(/Polo1/g) || []).length).toBe(1);
+    expect((content.match(/Marco2/g) || []).length).toBe(1);
+    expect((content.match(/Polo2/g) || []).length).toBe(1);
+  });
+
   test("Check if duplicates are kept, if allowed", async function () {
     await makeList.runActions({ listName: "list3" });
     await appendToList.runActions({

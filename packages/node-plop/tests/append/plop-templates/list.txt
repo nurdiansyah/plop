@@ -2,6 +2,9 @@ Don't remove me: Plop
 
 -- APPEND ITEMS HERE --
 
+-- APPEND END --
+
 /* APPEND OTHER ITEMS HERE */
 
 +++++++++++++++++++++++++++++++++++++++
+-- APPEND EXTRA --

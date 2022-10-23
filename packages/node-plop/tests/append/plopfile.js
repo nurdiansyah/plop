@@ -53,11 +53,13 @@ export default function (plop) {
         message: "Allow Duplicates?",
       },
     ],
-    actions: ({ allowDuplicates }) => [
+    actions: ({ allowDuplicates, patternEnd, injectActions = [] }) => [
+      ...injectActions,
       {
         type: "append",
         path: "src/{{listName}}.txt",
         pattern: /-- APPEND ITEMS HERE --/gi,
+        patternEnd,
         template: "😻 name: {{name}}1",
         unique: !allowDuplicates,
       },

@@ -141,7 +141,9 @@ export type PromptQuestion =
 export type DynamicPromptsFunction = (
   inquirer: inquirer.Inquirer
 ) => Promise<inquirer.Answers>;
-export type DynamicActionsFunction = (data?: inquirer.Answers) => ActionType[] | Promise<ActionType[]>;
+export type DynamicActionsFunction = (
+  data?: inquirer.Answers
+) => ActionType[] | Promise<ActionType[]>;
 
 export type Prompts = DynamicPromptsFunction | PromptQuestion[];
 export type Actions = DynamicActionsFunction | ActionType[];
@@ -259,6 +261,7 @@ interface AppendActionConfigBase extends ActionConfig {
   type: "append";
   path: string;
   pattern: string | RegExp;
+  patternEnd?: string | RegExp;
   unique: boolean;
   separator: string;
 }
