@@ -8,6 +8,7 @@ import {
 } from "./_common-action-utils.js";
 
 import actionInterfaceTest from "./_common-action-interface-check.js";
+import { escapeRegExp } from "../utils";
 
 const doAppend = async function (data, cfg, plop, fileData) {
   const stringToAppend = await getRenderedTemplate(data, cfg, plop);
@@ -21,18 +22,18 @@ const doAppend = async function (data, cfg, plop, fileData) {
     let lastPart = parts[parts.length - 1];
     if (cfg.patternEnd) {
       const _parts = lastPart.split(cfg.patternEnd, 2);
+      const _regexSlash = /\\/g;
       const _pattern = cfg.pattern.source || cfg.pattern;
-      const _content = `${_pattern}${_parts[0]}${
-        _parts[1] ? cfg.patternEnd : ""
-      }`;
+      const _patternEnd = cfg.patternEnd.source || cfg.patternEnd;
+      const _content = `${_pattern}${_parts[0]}${_parts[1] ? _patternEnd : ""}`;
       // batas akhir pencarian
-      const _contentWithoutDuplicates = _content.replace(
-        new RegExp(separator + stringToAppend, "g"),
+      const _contentWithoutDuplicates = _parts[0].replace(
+        new RegExp(separator + escapeRegExp(stringToAppend), "g"),
         ""
       );
       fileData = fileData.replace(
-        new RegExp(_content, "g"),
-        _contentWithoutDuplicates
+        new RegExp(`(${_pattern})(.*)(${_patternEnd})`, "gs"),
+        `$1${_contentWithoutDuplicates}$3`
       );
     } else {
       const lastPartWithoutDuplicates = lastPart.replace(
