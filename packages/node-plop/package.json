@@ -42,12 +42,12 @@
     "vitest": "^0.10.0"
   },
   "dependencies": {
-    "@types/inquirer": "^8.2.1",
+    "@types/inquirer": "^9.0.2",
     "change-case": "^4.1.2",
     "del": "^6.0.0",
     "globby": "^13.1.1",
     "handlebars": "^4.4.3",
-    "inquirer": "^8.2.2",
+    "inquirer": "^9.1.4",
     "isbinaryfile": "^4.0.8",
     "lodash.get": "^4.4.2",
     "lower-case": "^2.0.2",
