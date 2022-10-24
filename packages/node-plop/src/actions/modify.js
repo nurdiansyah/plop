@@ -9,6 +9,7 @@ import {
 } from "./_common-action-utils.js";
 
 import actionInterfaceTest from "./_common-action-interface-check.js";
+import { escapeRegExp } from "../utils.js";
 
 export default async function (data, cfg, plop) {
   const interfaceTestResult = actionInterfaceTest(cfg);
@@ -28,7 +29,7 @@ export default async function (data, cfg, plop) {
       const replacement = await getRenderedTemplate(data, cfg, plop);
 
       if (typeof cfg.pattern === "string" || cfg.pattern instanceof RegExp) {
-        fileData = fileData.replace(cfg.pattern, replacement);
+        fileData = fileData.replace(cfg.pattern, escapeRegExp(replacement));
       }
 
       const transformed = await getTransformedTemplate(fileData, data, cfg);

@@ -37,7 +37,7 @@ const doAppend = async function (data, cfg, plop, fileData) {
       );
     } else {
       const lastPartWithoutDuplicates = lastPart.replace(
-        new RegExp(separator + stringToAppend, "g"),
+        new RegExp(separator + escapeRegExp(stringToAppend), "g"),
         ""
       );
       fileData = fileData.replace(lastPart, lastPartWithoutDuplicates);
