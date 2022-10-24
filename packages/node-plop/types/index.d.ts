@@ -1,4 +1,4 @@
-import inquirer from "inquirer";
+import * as Inquirer from "inquirer";
 // @types/globby doesn't export types for GlobOptions, so we have to work a little bit to extract them:
 // GlobOptions is the second parameter of the sync function, which can be extracted with the Parameters<T> type
 import { globbySync } from "globby";
@@ -21,7 +21,7 @@ export interface NodePlopAPI {
     config: Partial<PlopGeneratorConfig>
   ): PlopGenerator;
 
-  setPrompt(name: string, prompt: inquirer.prompts.PromptConstructor): void;
+  setPrompt(name: string, prompt: Inquirer.PromptFunction): void;
 
   setWelcomeMessage(message: string): void;
 
@@ -77,7 +77,7 @@ export interface NodePlopAPI {
   /**
    * @deprecated Use "setPrompt" instead. This will be removed in the next major release
    */
-  addPrompt(name: string, prompt: inquirer.PromptModule): void;
+  addPrompt(name: string, prompt: Inquirer.PromptModule): void;
 
   /**
    * @deprecated Use "setPartial" instead. This will be removed in the next major release
@@ -118,7 +118,7 @@ export interface PlopGeneratorConfig {
 export interface PlopGenerator extends PlopGeneratorConfig {
   runPrompts: (bypassArr?: string[]) => Promise<any>;
   runActions: (
-    answers: inquirer.Answers,
+    answers: Inquirer.Answers,
     hooks?: PlopActionHooks
   ) => Promise<{
     changes: PlopActionHooksChanges[];
@@ -127,22 +127,22 @@ export interface PlopGenerator extends PlopGeneratorConfig {
 }
 
 export type PromptQuestion =
-  | inquirer.Question
-  | inquirer.CheckboxQuestion
-  | inquirer.ListQuestion
-  | inquirer.ExpandQuestion
-  | inquirer.ConfirmQuestion
-  | inquirer.EditorQuestion
-  | inquirer.RawListQuestion
-  | inquirer.PasswordQuestion
-  | inquirer.NumberQuestion
-  | inquirer.InputQuestion;
+  | Inquirer.Question
+  | Inquirer.CheckboxQuestion
+  | Inquirer.ListQuestion
+  | Inquirer.ExpandQuestion
+  | Inquirer.ConfirmQuestion
+  | Inquirer.EditorQuestion
+  | Inquirer.RawListQuestion
+  | Inquirer.PasswordQuestion
+  | Inquirer.NumberQuestion
+  | Inquirer.InputQuestion;
 
 export type DynamicPromptsFunction = (
-  inquirer: inquirer.Inquirer
-) => Promise<inquirer.Answers>;
+  inquirer: typeof Inquirer
+) => Promise<Inquirer.Answers>;
 export type DynamicActionsFunction = (
-  data?: inquirer.Answers
+  data?: Inquirer.Answers
 ) => ActionType[] | Promise<ActionType[]>;
 
 export type Prompts = DynamicPromptsFunction | PromptQuestion[];
@@ -182,7 +182,7 @@ export interface CustomActionConfig<TypeString extends string>
 }
 
 export type CustomActionFunction = (
-  answers: inquirer.Answers,
+  answers: Inquirer.Answers,
   config: CustomActionConfig<string>,
   plopfileApi: NodePlopAPI
 ) => Promise<string> | string;

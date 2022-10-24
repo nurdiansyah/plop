@@ -8,7 +8,7 @@ import {
 } from "./_common-action-utils.js";
 
 import actionInterfaceTest from "./_common-action-interface-check.js";
-import { escapeRegExp } from "../utils";
+import { escapeRegExp } from "../utils.js";
 
 const doAppend = async function (data, cfg, plop, fileData) {
   const stringToAppend = await getRenderedTemplate(data, cfg, plop);
